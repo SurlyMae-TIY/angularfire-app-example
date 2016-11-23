@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html ng-app="todoApp">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Angular Firebase Todo example</title>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="//www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
+    <script src="//cdn.firebase.com/libs/angularfire/2.0.1/angularfire.min.js"></script>
+    <script>
+    var config = {
+      apiKey: "AIzaSyCvGlG3GREAkIrJy2lBZZyAppycX1IZl9o",
+      authDomain: "angular-todo-1b158.firebaseapp.com",
+      databaseURL: "https://angular-todo-1b158.firebaseio.com",
+      storageBucket: "angular-todo-1b158.appspot.com",
+      messagingSenderId: "962898606832"
+    };
+    firebase.initializeApp(config);
+    </script>
+  </head>
+  <body>
+    <h1>Todo App</h1>
+    <div ng-controller="TodoCtrl as ctrl">
+      <div>
+        <h2>Add a new Todo:</h2>
+        <input type="text" ng-model="ctrl.newTodo" ng-keypress="ctrl.addNewTodo($event)"/>
+        <button ng-click="ctrl.addNewTodo()">Add This Task</button>
+      </div>
+      <div>
+        <h2>Your Todos:</h2>
+        <button ng-hide="ctrl.editMode"
+                ng-click="ctrl.triggerEditMode()">
+                Edit
+        </button>
+        <button ng-show="ctrl.editMode"
+                ng-click="ctrl.triggerEditMode()"/>
+                Show
+        </button>
+        <ul style="list-style: none">
+          <li ng-repeat="todo in ctrl.todos">
+            <button ng-hide="ctrl.editMode"
+            ng-click="ctrl.deleteTodo(todo)"
+            alt="mark complete"
+            style="color: #cccccc;">
+            💣
+          </button>
+            <span ng-bind="todo.$value" ng-hide="ctrl.editMode"></span>
+            <input type="text" ng-model="todo.$value" ng-show="ctrl.editMode" ng-change="ctrl.editTask(todo)" ng-keypress="$event.keyCode == 13 ? ctrl.editTask(todo) : null"/>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <script src="./app.js"></script>
+  </body>
+</html>
